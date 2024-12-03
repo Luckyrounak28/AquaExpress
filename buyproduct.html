@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Saraswati Aqua Neer - Order Water Products</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        .header {
+            padding: 10px 20px;
+            background-color: #0066cc;
+            color: white;
+        }
+        .header h1 {
+            font-size: 24px;
+            margin: 0;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 20px auto;
+            padding: 30px;
+            text-align: center;
+        }
+        .order-form {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+        .order-form label {
+            font-weight: bold;
+            margin-top: 10px;
+            display: block;
+            text-align: left;
+        }
+        .order-form select, .order-form input[type="text"], .order-form input[type="tel"], .order-form input[type="number"], .order-form input[type="submit"] {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+        .order-form input[type="submit"] {
+            background-color: #0066cc;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        .order-form input[type="submit"]:hover {
+            background-color: #005bb5;
+        }
+        .confirmation-message {
+            display: none;
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+            border-radius: 5px;
+            text-align: center;
+            transition: opacity 0.5s ease;
+        }
+        .confirmation-message button {
+            background-color: #0066cc;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .confirmation-message button:hover {
+            background-color: #005bb5;
+        }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <h1>Saraswati Aqua Neer</h1>
+</div>
+
+<div class="container">
+    <h1>Order Water Products</h1>
+    <p>Select the product and quantity you want to purchase and place your order.</p>
+
+    <!-- Order Form -->
+    <div class="order-form">
+        <h3>Order Details</h3>
+        <form id="orderForm" onsubmit="submitOrder(event)">
+            <label for="product">Select Product:</label>
+            <select id="product" name="product" required onchange="calculateTotal()">
+                <option value="" disabled selected>Select a product</option>
+                <option value="20 Litre Water Bottle" data-price="200">20 Litre Water Bottle - ₹200</option>
+                <option value="15 Litre Water Camper" data-price="799">15 Litre Water Camper - ₹799</option>
+                <option value="20 Litre Bottle with Tap" data-price="300">20 Litre Bottle with Tap - ₹300</option>
+                <option value="5 Litre Water Tap" data-price="300">5 Litre Water Tap - ₹300</option>
+            </select>
+
+            <label for="quantity">Select Quantity:</label>
+            <select id="quantity" name="quantity" required onchange="calculateTotal()">
+                <option value="0">0</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+            </select>
+
+          
+
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" placeholder="Your Name" required>
+
+            <label for="phone">Phone Number:</label>
+            <input type="tel" id="phone" name="phone" placeholder="Your Phone Number" required>
+
+            <label for="address">Address:</label>
+            <input type="text" id="address" name="address" placeholder="Your Address" required>
+
+            <label for="pincode">Pincode:</label>
+            <input type="number" id="pincode" name="pincode" placeholder="Your Pincode" required> <!-- Added pincode input field -->
+
+            <label for="totalPrice">Total Price:</label>
+            <input type="number" id="totalPrice" name="finalPrice" value="0" readonly> <!-- Display total price in input box -->
+
+            <input type="submit" value="Place Order">
+        </form>
+
+        <div id="confirmationMessage" class="confirmation-message">
+            <p>Your order has been placed successfully!</p>
+            <button onclick="window.location.href='index.html'">Go Back</button>
+        </div>
+    </div>
+</div>
+
+<script>
+function calculateTotal() {
+    const productSelect = document.getElementById('product');
+    const quantitySelect = document.getElementById('quantity');
+    const totalPriceInput = document.getElementById('totalPrice');
+
+    const selectedOption = productSelect.options[productSelect.selectedIndex];
+    const price = selectedOption ? parseFloat(selectedOption.getAttribute('data-price')) : 0;
+    const quantity = parseInt(quantitySelect.value);
+    
+    const totalPrice = price * quantity;
+    totalPriceInput.value = totalPrice; // Store the total price in the input box
+}
+
+function submitOrder(event) {
+    event.preventDefault(); // Prevent default form submission
+
+    // Collect form data
+    const formData = new FormData(document.getElementById('orderForm'));
+
+    // Send the data to the server
+    fetch('submit_product.php', {
+        method: 'POST',
+        body: formData,
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok ' + response.statusText);
+        }
+        return response.text(); // or response.json() if your server returns JSON
+    })
+    .then(data => {
+        // Handle success - Show confirmation message
+        document.getElementById('orderForm').reset(); // Reset the form
+        document.getElementById('confirmationMessage').style.display = 'block'; // Show confirmation message
+    })
+    .catch((error) => {
+        console.error('There has been a problem with your fetch operation:', error);
+        alert('There was a problem placing your order. Please try again later.');
+    });
+}
+</script>
+
+</body>
+</html>

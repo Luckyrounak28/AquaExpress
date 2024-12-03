@@ -1,0 +1,144 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Confirmation - Saraswati Aqua Neer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"></link>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body class="bg-blue-50 font-roboto flex flex-col min-h-screen">
+    <!-- Header -->
+    <header class="bg-gradient-to-r from-blue-500 to-blue-900 text-white shadow-md">
+        <div class="container mx-auto flex justify-between items-center py-4 px-6">
+            <h1 class="text-3xl font-bold">Saraswati Aqua Neer</h1>
+            <nav class="hidden md:flex space-x-6">
+                <a href="index.html" class="hover:bg-blue-700 px-3 py-2 rounded">Home</a>
+                <a href="buy.html" class="hover:bg-blue-700 px-3 py-2 rounded">Product</a>
+                <a href="contact.html" class="hover:bg-blue-700 px-3 py-2 rounded">Contact</a>
+                <a href="about.html" class="hover:bg-blue-700 px-3 py-2 rounded">About</a>
+                <a href="complaint.html" class="hover:bg-blue-700 px-3 py-2 rounded">Complaint</a>
+            </nav>
+            <div class="md:hidden">
+                <button id="hamburger" class="text-white focus:outline-none">
+                    <i class="fas fa-bars text-2xl"></i>
+                </button>
+            </div>
+        </div>
+        <nav id="mobile-menu" class="hidden md:hidden bg-blue-700">
+            <a href="index.html" class="block px-4 py-2 text-white hover:bg-blue-800">Home</a>
+            <a href="buy.html" class="block px-4 py-2 text-white hover:bg-blue-800">Product</a>
+            <a href="contact.html" class="block px-4 py-2 text-white hover:bg-blue-800">Contact</a>
+            <a href="about.html" class="block px-4 py-2 text-white hover:bg-blue-800">About</a>
+            <a href="complaint.html" class="block px-4 py-2 text-white hover:bg-blue-800">Complaint</a>
+        </nav>
+    </header>
+
+    <!-- Main content with loading and confirmation sections -->
+    <div class="main-content flex-1 flex items-center justify-center py-12 px-6">
+        <!-- Loading section -->
+        <div class="loading bg-white p-8 rounded-lg shadow-lg max-w-lg mx-auto text-center" id="loading">
+            <div class="loader border-6 border-gray-200 border-t-6 border-blue-500 rounded-full w-10 h-10 animate-spin mx-auto mb-4"></div>
+            <p class="loading-text text-gray-600">Your order is processing...</p>
+        </div>
+
+        <!-- Confirmation section -->
+        <div class="confirmation bg-white p-8 rounded-lg shadow-lg max-w-lg mx-auto text-center hidden" id="confirmation">
+            <div class="tick-icon text-green-500 text-6xl mb-4">✔</div>
+            <h2 class="text-2xl font-bold text-blue-800 mb-4">Order Confirmed</h2>
+            <p class="text-gray-600 mb-6">Your order has been successfully placed!</p>
+            <div id="orderDetails" class="text-left text-gray-700"></div>
+
+            <!-- Button group for "Download Bill" and "Go Back" -->
+            <div class="button-group mt-6">
+                <a class="button download-btn bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 cursor-pointer" onclick="downloadBill()">Download Bill</a>
+                <a href="main.html" class="button back-btn bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500">Go Back</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gradient-to-r from-blue-500 to-blue-900 text-white text-center py-4">
+        <p>&copy; 2024 Saraswati Aqua Neer | Contact us: 123-456-7890</p>
+    </footer>
+
+    <!-- Add the audio element for the "ding" sound -->
+    <audio id="dingSound" src="ding.mp3"></audio>
+
+    <script>
+        document.getElementById('hamburger').addEventListener('click', function() {
+            var menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        });
+
+        // Show loading screen first
+        document.getElementById('loading').style.display = 'block';
+
+        // Function to get query parameters from URL
+        function getQueryParams() {
+            const params = new URLSearchParams(window.location.search);
+            return {
+                name: params.get('name'),
+                phone: params.get('phone'),
+                address: params.get('address'),
+                quantity: params.get('quantity'),
+                tap: params.get('tap'),
+                totalPrice: params.get('totalPrice'),
+                deliveryDate: params.get('deliveryDate'),
+                deliveryTime: params.get('deliveryTime')
+            };
+        }
+
+        // Function to display order details after delay
+        setTimeout(() => {
+            // Hide loading screen and show confirmation section
+            document.getElementById('loading').style.display = 'none';
+            document.getElementById('confirmation').style.display = 'block';
+
+            // Fetch and display order details from query parameters
+            const orderDetails = getQueryParams();
+            const detailsContainer = document.getElementById('orderDetails');
+            detailsContainer.innerHTML = `
+                <strong>Order Details:</strong><br>
+                Name: ${orderDetails.name}<br>
+                Phone: ${orderDetails.phone}<br>
+                Address: ${orderDetails.address}<br>
+                Quantity: ${orderDetails.quantity} bottle(s)<br>
+                Tap: ${orderDetails.tap}<br>
+                Total Price: ₹${orderDetails.totalPrice}<br>
+                Delivery Date: ${orderDetails.deliveryDate}<br>
+                Delivery Time: ${orderDetails.deliveryTime}
+            `;
+
+            // Play the "ding" sound
+            document.getElementById('dingSound').play();
+        }, 3000); // Set delay to 3 seconds (3000 milliseconds)
+
+        // Function to download the bill as a text file
+        function downloadBill() {
+            const orderDetails = getQueryParams();
+            const billContent = `
+                Saraswati Aqua Neer\n
+                Order Confirmation\n
+                ========================\n
+                Name: ${orderDetails.name}\n
+                Phone: ${orderDetails.phone}\n
+                Address: ${orderDetails.address}\n
+                Quantity: ${orderDetails.quantity} bottle(s)\n
+                Tap: ${orderDetails.tap}\n
+                Total Price: ₹${orderDetails.totalPrice}\n
+                Delivery Date: ${orderDetails.deliveryDate}\n
+                Delivery Time: ${orderDetails.deliveryTime}\n
+                ========================\n
+                Thank you for your order!
+            `;
+
+            const blob = new Blob([billContent], { type: 'text/plain' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = 'Order_Bill.txt';
+            link.click();
+        }
+    </script>
+</body>
+</html>

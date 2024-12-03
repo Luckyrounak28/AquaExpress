@@ -1,0 +1,51 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - Saraswati Aqua Neer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            background-image: url('bg.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+    </style>
+</head>
+<body class="bg-blue-50 text-gray-800">
+    <header class="bg-gradient-to-r from-blue-500 to-blue-900 text-white py-4 shadow-md fixed w-full z-10">
+        <div class="container mx-auto flex justify-between items-center px-6">
+            <h1 class="text-3xl font-bold">Saraswati Aqua Neer - Admin Panel</h1>
+            <nav>
+                <ul class="flex space-x-4">
+                    <li><a href="index.html" class="hover:bg-blue-700 px-3 py-2 rounded transition">Logout</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container mx-auto flex flex-col items-center justify-center flex-1 mt-24 px-6">
+        <div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-md text-center">
+            <h2 class="text-2xl font-bold text-blue-800 mb-6">Admin Actions</h2>
+            <div class="space-y-4">
+                <a href="admin_pannel.php" class="block bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition">Show Orders</a>
+                <a href="view_complaint.php" class="block bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition">Show Complaints</a>
+                <a href="view_product.php" class="block bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition">Show Products</a>
+            </div>
+        </div>
+    </main>
+
+    <footer class="bg-gradient-to-r from-blue-500 to-blue-900 text-white text-center py-4 mt-auto">
+        <p>&copy; 2024 Saraswati Aqua Neer. All Rights Reserved.</p>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Saraswati Aqua Neer</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html, body {
+            height: 100%;
+            font-family: 'Helvetica Neue', Arial, Sans-Serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        body {
+            background-image: url('bg.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        .login-wrap {
+            position: relative;
+            background: rgba(236, 240, 241, 0.9); /* Make the background semi-transparent */
+            width: 350px;
+            border-radius: 5px;
+            box-shadow: 3px 3px 10px #333;
+            padding: 15px;
+        }
+
+        h2 {
+            text-align: center;
+            font-weight: 200;
+            font-size: 2em;
+            margin-top: 10px;
+            color: #34495e;
+        }
+
+        .form {
+            padding-top: 20px;
+        }
+
+        input[type="text"],
+        input[type="password"],
+        button {
+            width: 80%;
+            margin-left: 10%;
+            margin-bottom: 25px;
+            height: 40px;
+            border-radius: 5px;
+            outline: 0;
+        }
+
+        input[type="text"],
+        input[type="password"] {
+            border: 1px solid #bbb;
+            padding: 0 0 0 10px;
+            font-size: 14px;
+            transition: border 0.3s ease;
+        }
+
+        input[type="text"]:focus,
+        input[type="password"]:focus {
+            border: 1px solid #3498db;
+        }
+
+        button {
+            background: #e74c3c;
+            border: none;
+            color: white;
+            font-size: 18px;
+            font-weight: 200;
+            cursor: pointer;
+            transition: box-shadow 0.4s ease;
+        }
+
+        button:hover {
+            box-shadow: 1px 1px 5px #555;
+        }
+
+        button:active {
+            box-shadow: 1px 1px 7px #222;
+        }
+
+        .login-wrap:after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: #27ae60;
+            height: 5px;
+            border-radius: 5px 5px 0 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-wrap">
+        <h2>Login</h2>
+        <div class="form">
+            <input type="text" id="username" placeholder="Username" required />
+            <input type="password" id="password" placeholder="Password" required />
+            <button onclick="login()">Sign in</button>
+        </div>
+    </div>
+
+    <script>
+        function login() {
+            // Get the values from input fields
+            const username = document.getElementById("username").value;
+            const password = document.getElementById("password").value;
+
+            // Check the hardcoded credentials
+            if (username === "san123" && password === "9934799") {
+                // Redirect to admin.html on successful login
+                window.location.href = "admin.html";
+            } else {
+                alert("Invalid username or password.");
+            }
+        }
+    </script>
+</body>
+</html>
